@@ -3,7 +3,7 @@
   "name": "Vanillian",
   "version": "1.0.0",
   "minAppVersion": "0.15.0",
-  "description": "A toolbox for vault-vanilla",
+  "description": "The toolbox for vault-vanilla",
   "author": "VioletsOleander",
   "isDesktopOnly": false
 }
