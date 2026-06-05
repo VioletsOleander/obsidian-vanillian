@@ -1,23 +1,19 @@
 import { Editor } from "obsidian";
 
-/** Insert `text` after current cursor. */
-function insertText(editor: Editor, text: string) {
+/** Insert a surrounding section for `content` after current cursor. */
+function insertSurround(editor: Editor, content: string): void {
   const cursor = editor.getCursor();
 
+  const begin = "> **\\[" + content + "\\]>** ";
+  const end = "> **<\\[" + content + "\\]**\n";
+  const text = begin + "\n\n" + end;
+
   editor.transaction({
-    changes: [{ from: cursor, text: text }],
-    selection: { from: { ch: cursor.ch + text.length, line: cursor.line } },
+    changes: [
+      { from: cursor, text: text },
+    ],
+    selection: { from: { ch: cursor.ch + begin.length, line: cursor.line } },
   });
 }
 
-function insertStart(editor: Editor, content: string): void {
-  const text = "> **\\[" + content + "\\]>** ";
-  insertText(editor, text);
-}
-
-function insertEnd(editor: Editor, content: string): void {
-  const text = "> **<\\[" + content + "\\]**";
-  insertText(editor, text);
-}
-
-export { insertEnd, insertStart };
+export { insertSurround };
