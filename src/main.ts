@@ -14,7 +14,7 @@ class Vanillian extends Plugin {
     });
 
     this.addCommand({
-      id: "insert-background-konwledge",
+      id: "insert-background-knowledge",
       name: "Insert background knowledge",
       editorCallback: (editor: Editor) => {
         insertSurround(editor, "Background Knowledge");
