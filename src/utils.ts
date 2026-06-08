@@ -6,7 +6,7 @@ function insertSurround(editor: Editor, content: string): void {
 
   const begin = "> **\\[" + content + "\\]>** ";
   const end = "> **<\\[" + content + "\\]**\n";
-  const text = begin + "\n\n" + end;
+  const text = begin + "\n" + end;
 
   editor.transaction({
     changes: [
