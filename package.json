@@ -13,7 +13,8 @@
     "check-type": "tsc",
     "lint": "eslint .",
     "fmt": "dprint fmt",
-    "check-fmt": "dprint check"
+    "check-fmt": "dprint check",
+    "svelte-check": "svelte-check"
   },
   "dependencies": {
     "obsidian": "latest"
@@ -23,9 +24,14 @@
     "@types/node": "^16.11.6",
     "dprint": "^0.54.0",
     "esbuild": "0.25.5",
+    "esbuild-svelte": "^0.9.5",
     "eslint-plugin-obsidianmd": "0.1.9",
     "globals": "14.0.0",
+    "svelte": "^5.55.5",
+    "svelte-check": "^4.4.8",
+    "svelte-eslint-parser": "^1.6.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "8.35.1"
+    "typescript-eslint": "8.35.1",
+    "typescript-svelte-plugin": "^0.3.52"
   }
 }

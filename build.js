@@ -1,6 +1,7 @@
 import { builtinModules } from "node:module";
 
 import esbuild from "esbuild";
+import fs from "node:fs";
 import process from "process";
 
 const banner = `/*
@@ -11,6 +12,17 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = process.argv[2] === "production";
 
+/** @type {import("esbuild").Plugin} */
+const renameCSSPlugin = {
+  name: "Rename CSS",
+  setup: (build) => {
+    build.onEnd(() => {
+      if (fs.existsSync("dist/main.css")) {
+        fs.renameSync("dist/main.css", "dist/styles.css");
+      }
+    });
+  },
+};
 const context = await esbuild.context({
   // General options
   bundle: true,
@@ -47,6 +59,20 @@ const context = await esbuild.context({
   sourcemap: prod ? false : "inline",
   // Logging
   logLevel: "info",
+  // Plugins
+  plugins: [
+    // Reference: https://svelte.dev/docs/svelte/svelte-compiler#CompileOptions
+    // When using "injected", the generated code will inject css into the <style> tag under <head>,
+    // because obsidian hot reload will not clean it on each reload, modified css will not be hot
+    // reloaded when using "injected"
+
+    // Therefore we have to use "external" to let css hot reload work
+    // Another benefit of using "external" is minimizing the size of generated js file
+    esbuildSvelte({
+      compilerOptions: { css: "external" },
+    }),
+    renameCSSPlugin,
+  ],
 });
 
 if (prod) {
