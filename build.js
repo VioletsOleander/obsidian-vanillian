@@ -1,6 +1,7 @@
 import { builtinModules } from "node:module";
 
 import esbuild from "esbuild";
+import esbuildSvelte from "esbuild-svelte";
 import fs from "node:fs";
 import process from "process";
 

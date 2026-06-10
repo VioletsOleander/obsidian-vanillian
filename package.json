@@ -26,6 +26,7 @@
     "esbuild": "0.25.5",
     "esbuild-svelte": "^0.9.5",
     "eslint-plugin-obsidianmd": "0.1.9",
+    "eslint-plugin-svelte": "^3.17.1",
     "globals": "14.0.0",
     "svelte": "^5.55.5",
     "svelte-check": "^4.4.8",
