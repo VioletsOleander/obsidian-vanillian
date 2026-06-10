@@ -17,3 +17,8 @@ repos:
         entry: npx eslint
         language: system
         types: [ts]
+      - id: lint-svelte
+        name: Lint Svelte
+        entry: npx svelte-check
+        language: system
+        types: [svelte]
