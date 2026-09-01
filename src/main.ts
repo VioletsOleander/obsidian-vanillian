@@ -20,6 +20,14 @@ class Vanillian extends Plugin {
         insertSurround(editor, "Background Knowledge");
       },
     });
+
+    this.addCommand({
+      id: "insert-derivation",
+      name: "Insert derivation",
+      editorCallback: (editor: Editor) => {
+        insertSurround(editor, "Derivation");
+      },
+    });
   }
 }
 
