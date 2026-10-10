@@ -8,15 +8,15 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "watch": "node build.js",
-    "build": "tsc -noEmit -skipLibCheck && node build.js production"
+    "watch": "node esbuild.config.js",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.js production",
+    "lint": "eslint ."
   },
   "devDependencies": {
-    "@types/node": "^16.11.6",
     "esbuild": "0.25.5",
-    "globals": "14.0.0",
+    "eslint": "^10.12.0",
+    "eslint-plugin-obsidianmd": "^0.4.2",
     "obsidian": "latest",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "8.35.1"
+    "typescript": "^6.0.3"
   }
 }
