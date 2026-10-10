@@ -1,10 +1,11 @@
 import { Plugin } from "obsidian";
+
 import { insertSurround } from "./utils";
 
 import type { Editor } from "obsidian";
 
-class Vanillian extends Plugin {
-  override async onload(): Promise<void> {
+export default class Vanillian extends Plugin {
+  override async onload() {
     this.addCommand({
       id: "insert-remark",
       name: "Insert remark",
@@ -30,6 +31,3 @@ class Vanillian extends Plugin {
     });
   }
 }
-
-export default Vanillian;
-export { Vanillian };

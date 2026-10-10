@@ -1,7 +1,7 @@
 import { Editor } from "obsidian";
 
 /** Insert a surrounding section for `content` after current cursor. */
-function insertSurround(editor: Editor, content: string): void {
+export function insertSurround(editor: Editor, content: string): void {
   const cursor = editor.getCursor();
 
   const begin = "> **\\[" + content + "\\]>** ";
@@ -15,5 +15,3 @@ function insertSurround(editor: Editor, content: string): void {
     selection: { from: { ch: cursor.ch + begin.length, line: cursor.line } },
   });
 }
-
-export { insertSurround };
