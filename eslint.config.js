@@ -27,6 +27,7 @@ export default defineConfig(
       "eslint-comments/no-unlimited-disable": "off",
       "eslint-comments/require-description": "off",
       "eslint-comments/no-restricted-disable": "off",
+      "import/no-extraneous-dependencies": "off",
     },
   },
 );

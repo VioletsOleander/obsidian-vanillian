@@ -1,3 +1,5 @@
+import { Prec } from "@codemirror/state"; 
+import { keymap } from "@codemirror/view";
 import { Plugin, SuggestModal } from "obsidian";
 
 import { insertSurround } from "./utils";
@@ -38,6 +40,7 @@ export default class Vanillian extends Plugin {
     });
 
     this.#mapKeys();
+    this.#addExtensions();
   }
 
   override onunload(): void {
@@ -85,5 +88,31 @@ export default class Vanillian extends Plugin {
         return false;
       });
     };
+  }
+
+  #addExtensions() {
+    const keymaps = Prec.high(keymap.of(
+      [
+        {
+          key: "Tab",
+          run: (view) => {
+            // With selection, fallback.
+            if (!view.state.selection.main.empty) {
+              return false;
+            }
+
+            // Insert 4 spaces.
+            view.dispatch(view.state.update({
+              changes: { from: view.state.selection.main.from, insert: "    " },
+              selection: { anchor: view.state.selection.main.from + 4 },
+            }));
+
+            return true;
+          },
+        },
+      ],
+    ));
+
+    this.registerEditorExtension(keymaps);
   }
 }
