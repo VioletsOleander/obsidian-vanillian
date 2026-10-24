@@ -22,4 +22,11 @@ export default defineConfig(
   },
   // Common js and ts lint rules are included in the obsidian provided configs.
   ...obsidianmd.configs.recommended,
+  {
+    rules: {
+      "eslint-comments/no-unlimited-disable": "off",
+      "eslint-comments/require-description": "off",
+      "eslint-comments/no-restricted-disable": "off",
+    },
+  },
 );
