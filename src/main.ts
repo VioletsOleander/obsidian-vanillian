@@ -1,4 +1,4 @@
-import { Prec } from "@codemirror/state"; 
+import { Prec } from "@codemirror/state";
 import { keymap } from "@codemirror/view";
 import { Plugin, SuggestModal } from "obsidian";
 
@@ -15,6 +15,21 @@ export default class Vanillian extends Plugin {
   }
 
   override async onload() {
+    this.#addCommands();
+    this.#mapKeys();
+    this.#addExtensions();
+  }
+
+  override onunload(): void {
+    // Recover the original onOpen.
+    // Effectively preventing hotreloading to cause recursive monkypatch.
+    // Notice that the registered keys will not be unregistered.
+    if (this.#original !== null) {
+      SuggestModal.prototype.onOpen = this.#original;
+    }
+  }
+
+  #addCommands() {
     this.addCommand({
       id: "insert-remark",
       name: "Insert remark",
@@ -38,18 +53,6 @@ export default class Vanillian extends Plugin {
         insertSurround(editor, "Derivation");
       },
     });
-
-    this.#mapKeys();
-    this.#addExtensions();
-  }
-
-  override onunload(): void {
-    // Recover the original onOpen.
-    // Effectively preventing hotreloading to cause recursive monkypatch.
-    // Notice that the registered keys will not be unregistered.
-    if (this.#original !== null) {
-      SuggestModal.prototype.onOpen = this.#original;
-    }
   }
 
   #mapKeys() {
@@ -105,6 +108,32 @@ export default class Vanillian extends Plugin {
             view.dispatch(view.state.update({
               changes: { from: view.state.selection.main.from, insert: "    " },
               selection: { anchor: view.state.selection.main.from + 4 },
+            }));
+
+            return true;
+          },
+        },
+        {
+          key: "Backspace",
+          run: (view) => {
+            // With selection, fallback.
+            if (!view.state.selection.main.empty) {
+              return false;
+            }
+
+            const from = view.state.selection.main.from - 4;
+            const to = view.state.selection.main.from;
+            const before = view.state.doc.sliceString(from, to);
+
+            // No 4 spaces, fallback.
+            if (before !== "    ") {
+              return false;
+            }
+
+            // Delete 4 spaces.
+            view.dispatch(view.state.update({
+              changes: { from: from, to: to, insert: "" },
+              selection: { anchor: from },
             }));
 
             return true;
