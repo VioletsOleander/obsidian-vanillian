@@ -104,11 +104,23 @@ export default class Vanillian extends Plugin {
               return false;
             }
 
-            // Insert 4 spaces.
-            view.dispatch(view.state.update({
-              changes: { from: view.state.selection.main.from, insert: "    " },
-              selection: { anchor: view.state.selection.main.from + 4 },
-            }));
+            const skipChars = ")]}>\"'`";
+
+            const from = view.state.selection.main.from;
+            const nextChar = view.state.sliceDoc(from, from + 1);
+
+            if (skipChars.includes(nextChar)) {
+              // Skip next char.
+              view.dispatch(view.state.update({
+                selection: { anchor: from + 1 },
+              }));
+            } else {
+              // Insert 4 spaces.
+              view.dispatch(view.state.update({
+                changes: { from: from, insert: "    " },
+                selection: { anchor: from + 4 },
+              }));
+            }
 
             return true;
           },
